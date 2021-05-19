@@ -12,7 +12,7 @@ actor {
     return a != Guestbook[0];
   };
 
-  private func arrayToJson() : Text {
+  public func getJson() : async Text {
     var guestbook_response : Text = "";
     if(Guestbook.size() > 0) {
       guestbook_response := "\"" # Guestbook[0] # "\"";
@@ -24,13 +24,6 @@ actor {
     };
 
     return "[" # guestbook_response # "]";
-  };
-
-  public func getJson() : async Text {
-    // let gb_size_nat : Nat = Guestbook.size();
-    // let gb_size : Text = Nat.toText( gb_size_nat );
-
-    return arrayToJson();
   };
 
   public func insert(name : Text) : async Text {

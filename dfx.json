@@ -9,7 +9,7 @@
         "guestbook"
       ],
       "frontend": {
-        "entrypoint": "src/guestbook_assets/public/index.js"
+        "entrypoint": "src/guestbook_assets/src/index.html"
       },
       "source": [
         "src/guestbook_assets/assets",
@@ -23,7 +23,7 @@
       "packtool": ""
     }
   },
-  "dfx": "0.6.26",
+  "dfx": "0.7.0",
   "networks": {
     "local": {
       "bind": "127.0.0.1:8000",

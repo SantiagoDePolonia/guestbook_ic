@@ -12,7 +12,8 @@ guestbook.getJson()
     setLoading(false);
   });
 
-document.getElementById("clickMeBtn").addEventListener("click", async () => {
+document.getElementById("clickMeBtn").addEventListener("click", async (e) => {
+  e.preventDefault();
   setLoading(true);
   const name = document.getElementById("name").value.toString();
   const guestbook_raw = await guestbook.insert(name);
@@ -33,10 +34,12 @@ function insertList(guestbook_raw) {
 
 function setLoading(val = true) {
   const loading = document.getElementById("LOADING");
-
+  const button = document.getElementById("clickMeBtn");
   if(val) {
+    button.disabled = true;
     loading.style.display = "block";
   } else {
+    button.disabled = false;
     loading.style.display = "none";
   }
 }

@@ -14,7 +14,7 @@ img {
     float: right;
 }
 
-section {
+section, form {
     display: flex;
     flex-flow: row wrap;
     max-width: 40vw;

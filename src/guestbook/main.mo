@@ -1,15 +1,39 @@
 import Array "mo:base/Array";
+import Text "mo:base/Text";
+import Char "mo:base/Char";
 import Nat "mo:base/Nat";
 
 actor {
-  var Guestbook : [Text] = [];
+  stable var Guestbook : [Text] = [];
 
   private func arrayToStringReducer(agg : Text, el : Text) : Text {
     return agg # ", \"" # el # "\"";
   };
 
-  private func arrayShiftFilter(a : Text) : Bool {
-    return a != Guestbook[0];
+  private func arrayShiftFilter(str : Text) : Bool {
+    return str != Guestbook[0];
+  };
+
+  private func translateSanitize(ch : Char) : Text {
+    var text : Text = Text.fromChar(ch);
+    if(Text.equal(text, "<")) {
+      return "";
+    };
+
+    if(Text.equal(text, ">")) {
+      return "";
+    };
+
+    if(Text.equal(text, "\"")) {
+      return "";
+    };
+
+    return text;
+  };
+
+  private func sanitize(str : Text) : Text {
+    var response : Text = Text.translate(str, translateSanitize);
+    return response;
   };
 
   public func getJson() : async Text {
@@ -27,11 +51,9 @@ actor {
   };
 
   public func insert(name : Text) : async Text {
-    Guestbook := Array.append(Guestbook, [name]);
-
-    // @TODO: validation
-    // no " characters allowed
-
+    let cleanName = sanitize(name);
+    Guestbook := Array.append(Guestbook, [cleanName]);
+    
     let gb_response = await getJson();
     return gb_response;
   };
